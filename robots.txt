@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://portfoliopro-demo.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Disallow certain file types
+Disallow: *.pdf$
+Disallow: *.doc$
+Disallow: *.docx$
+
+# Allow CSS and JS files
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/ 

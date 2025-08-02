@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary-color: #64748b;
+            --accent-color: #06b6d4;
+            --accent-hover: #0891b2;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.25);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+            --border-radius: 1rem;
+            --border-radius-lg: 1.5rem;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            background-attachment: fixed;
+        }
+        
+        main {
+            flex: 1;
+        }
+        
+        .modern-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, var(--text-dark), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-dark), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.025em;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .project-card img {
+            transition: var(--transition);
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .filter-btn:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+        }
+        
+        .filter-btn.active::before {
+            transform: scaleX(1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .tech-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-tag:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .tech-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+            border-radius: 0 0 0.25rem 0.25rem;
+        }
+        
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .loading {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+        
+        .loading.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+        
+        .floating-element-1 {
+            top: 10%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element-2 {
+            top: 60%;
+            right: 10%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float 4s ease-in-out infinite reverse;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with logo and navigation -->
+    <header class="modern-header p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="logo">
+                <h1 class="text-2xl font-bold text-gray-800">
+                    <a href="index.html" class="hover:text-blue-600 transition-colors">My Portfolio</a>
+                </h1>
+            </div>
+            <!-- Hamburger button for mobile -->
+            <button id="hamburger-btn" class="md:hidden flex flex-col space-y-1">
+                <span class="w-6 h-0.5 bg-gray-600"></span>
+                <span class="w-6 h-0.5 bg-gray-600"></span>
+                <span class="w-6 h-0.5 bg-gray-600"></span>
+            </button>
+            <!-- Navigation menu -->
+            <nav id="mobile-menu" class="hidden md:block">
+                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 absolute md:relative top-16 md:top-0 left-0 md:left-auto w-full md:w-auto bg-gray-100 md:bg-transparent p-4 md:p-0 rounded-lg md:rounded-none shadow-lg md:shadow-none">
+                    <li><a href="index.html" class="nav-link block text-gray-700 hover:text-blue-600">Home</a></li>
+                    <li><a href="about.html" class="nav-link block text-gray-700 hover:text-blue-600">About</a></li>
+                    <li><a href="portfolio.html" class="nav-link block text-blue-600 font-medium">Portfolio</a></li>
+                    <li><a href="contact.html" class="nav-link block text-gray-700 hover:text-blue-600">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <!-- Portfolio Hero Section -->
+        <section class="py-24 text-center relative overflow-hidden">
+            <!-- Floating background elements -->
+            <div class="floating-element floating-element-1"></div>
+            <div class="floating-element floating-element-2"></div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="loading">
+                    <span class="inline-block px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 border border-white/50 shadow-lg mb-6">
+                        🎨 My Creative Work
+                    </span>
+                    <h1 class="hero-title text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">Portfolio</h1>
+                    <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        A showcase of my recent projects and creative work
+                        <span class="block mt-2 text-gray-500">crafted with passion and precision</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Buttons -->
+        <section class="py-12 bg-white/20 backdrop-blur-sm">
+            <div class="container mx-auto px-4">
+                <div class="loading">
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button class="filter-btn active" data-filter="all">All Projects</button>
+                        <button class="filter-btn" data-filter="web">Web Apps</button>
+                        <button class="filter-btn" data-filter="mobile">Mobile</button>
+                        <button class="filter-btn" data-filter="design">Design</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Grid -->
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="project-card project-item loading" data-category="web">
+                        <div class="project-image overflow-hidden">
+                            <a href="project-detail.html">
+                                <img src="https://picsum.photos/400/300?random=1" alt="E-commerce Platform" class="w-full h-48 object-cover">
+                            </a>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tech-tag">Web App</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors" title="View Live Demo">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors" title="View Source Code">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                                <a href="project-detail.html" class="hover:text-blue-600 transition-colors">E-commerce Platform</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">A full-featured online store with payment integration, inventory management, and admin dashboard.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">React</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Node.js</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">MongoDB</span>
+                            </div>
+                            <a href="project-detail.html" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View Details →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-card project-item loading" data-category="mobile">
+                        <div class="project-image overflow-hidden">
+                            <img src="https://picsum.photos/400/300?random=2" alt="Task Management App" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tech-tag">Mobile App</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">Task Management App</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Cross-platform mobile app for team collaboration and project management with real-time updates.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">React Native</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Firebase</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Redux</span>
+                            </div>
+                            <a href="project-detail.html" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View Details →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-card project-item loading" data-category="web">
+                        <div class="project-image overflow-hidden">
+                            <img src="https://picsum.photos/400/300?random=3" alt="Analytics Dashboard" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tech-tag">Web App</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">Analytics Dashboard</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Real-time data visualization dashboard with interactive charts and comprehensive reporting features.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Vue.js</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">D3.js</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Python</span>
+                            </div>
+                            <a href="project-detail.html" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View Details →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="project-card project-item loading" data-category="design">
+                        <div class="project-image overflow-hidden">
+                            <img src="https://picsum.photos/400/300?random=4" alt="Brand Identity Design" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tech-tag">Design</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">Brand Identity Design</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Complete brand identity package including logo design, color palette, and brand guidelines.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Figma</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Illustrator</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Photoshop</span>
+                            </div>
+                            <a href="project-detail.html" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View Details →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="project-card project-item loading" data-category="web">
+                        <div class="project-image overflow-hidden">
+                            <img src="https://picsum.photos/400/300?random=5" alt="Social Media Platform" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tech-tag">Web App</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">Social Media Platform</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Modern social networking platform with real-time messaging, content sharing, and community features.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Next.js</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Socket.io</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">PostgreSQL</span>
+                            </div>
+                            <a href="project-detail.html" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View Details →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 6 -->
+                    <div class="project-card project-item loading" data-category="mobile">
+                        <div class="project-image overflow-hidden">
+                            <img src="https://picsum.photos/400/300?random=6" alt="Fitness Tracker App" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tech-tag">Mobile App</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">Fitness Tracker App</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive fitness tracking app with workout plans, nutrition tracking, and progress analytics.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Flutter</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Dart</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">SQLite</span>
+                            </div>
+                            <a href="project-detail.html" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">View Details →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <div class="social-links mb-4">
+                <a href="#" aria-label="GitHub" class="mx-3 hover:text-blue-400 transition-colors">GitHub</a>
+                <a href="#" aria-label="LinkedIn" class="mx-3 hover:text-blue-400 transition-colors">LinkedIn</a>
+                <a href="#" aria-label="Twitter" class="mx-3 hover:text-blue-400 transition-colors">Twitter</a>
+            </div>
+            <p>&copy; 2024 My Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Loading animation
+            const loadingElements = document.querySelectorAll('.loading');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('loaded');
+                        }, index * 100);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            loadingElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Portfolio filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectItems = document.querySelectorAll('.project-item');
+            
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(button => button.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter projects
+                    projectItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
